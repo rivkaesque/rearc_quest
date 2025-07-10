@@ -24,8 +24,8 @@ This quest consists of 4 different parts. Putting all 4 parts together we will h
     - Ensure the script doesn't upload the same file more than once.
 
 #### Part 2: APIs
-1. Create a script that will fetch data from [this API](https://datausa.io/api/data?drilldowns=Nation&measures=Population).
-   You can read the documentation [here](https://datausa.io/about/api/)
+1. Create a script that will fetch data from [this API](https://honolulu-api.datausa.io/tesseract/data.jsonrecords?cube=acs_yg_total_population_1&drilldowns=Year%2CNation&locale=en&measures=Population).
+   You can read the documentation [here](https://datausa.io/about/api/).
 2. Save the result of this API call as a JSON file in S3.
 
 #### Part 3: Data Analytics
