@@ -119,3 +119,6 @@ How could you add information to your programmatic access requests to let BLS co
 <summary>Hint 3</summary>
   Adding a <code>User-Agent</code> header to your request with contact information will comply with the BLS data policies and allow you to keep accessing their data programmatically.
 </details>
+
+### Q. Can I use AI to assist me?
+You may use AI as a reference tool but there will be a strong expectation to exhibit the same expertise and understanding from your submission in your interview. In addition we encourage you to be open about any usage! Please document what you used, what your prompts were, how it helped, what it got wrong, etc.
