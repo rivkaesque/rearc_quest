@@ -9,7 +9,8 @@
   "libraries": [
     {
       "notebook": {
-        "path": "/Workspace/Users/<your-email>/BLS_Data_Ingestion"
+        "path": "/Workspace/Users/<your-email>/BLS_Data_Ingestion",
+        "_comment": "Replace <your-email> with your Databricks user email (e.g., user@company.com)"
       }
     }
   ],

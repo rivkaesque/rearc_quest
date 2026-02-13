@@ -143,12 +143,15 @@ def normalize_table_name(filename: str) -> str:
         
     Returns:
         Valid table name (e.g., 'pr_data_0_current')
-    """
-    # Remove file extension
-    name = filename.rsplit('.', 1)[0] if '.' in filename else filename
     
+    Note:
+        For files with multiple dots like 'pr.data.0.Current', the entire filename
+        is processed: dots and special characters are replaced with underscores,
+        then converted to lowercase to create a valid Delta table name.
+    """
     # Replace dots and special characters with underscores
-    name = re.sub(r'[^a-zA-Z0-9]+', '_', name)
+    # (this handles filenames with multiple dots correctly)
+    name = re.sub(r'[^a-zA-Z0-9]+', '_', filename)
     
     # Convert to lowercase
     name = name.lower()
@@ -179,10 +182,15 @@ def create_dataframe_from_rows(rows: List[List[str]], filename: str):
         return spark.createDataFrame([], schema)
     
     # Use first row as headers if it looks like a header row
-    # (contains non-numeric values)
+    # Check if first row contains typical header keywords or mostly non-numeric values
     first_row = rows[0]
-    has_header = any(not str(val).strip().replace('.', '').replace('-', '').isdigit() 
-                     for val in first_row if val.strip())
+    header_keywords = ['id', 'name', 'series', 'year', 'period', 'value', 'code', 'title', 'description']
+    has_keyword = any(keyword in str(val).lower() for val in first_row for keyword in header_keywords)
+    
+    # Also check if majority of values are non-numeric
+    non_numeric_count = sum(1 for val in first_row 
+                           if val.strip() and not str(val).strip().replace('.', '').replace('-', '').isdigit())
+    has_header = has_keyword or (non_numeric_count > len(first_row) / 2)
     
     if has_header:
         headers = [col.strip() for col in first_row]
