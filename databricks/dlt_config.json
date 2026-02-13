@@ -1,0 +1,35 @@
+{
+  "name": "bls_data_ingestion",
+  "target": "bls_data",
+  "catalog": "main",
+  "configuration": {
+    "bls.base_url": "https://download.bls.gov/pub/time.series/pr/",
+    "bls.user_agent": "Mozilla/5.0 (compatible; BLS-Data-Ingestion/1.0; +https://github.com/databricks)"
+  },
+  "libraries": [
+    {
+      "notebook": {
+        "path": "/Workspace/Users/<your-email>/BLS_Data_Ingestion"
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "label": "default",
+      "autoscale": {
+        "min_workers": 1,
+        "max_workers": 5
+      },
+      "spark_version": "13.3.x-scala2.12",
+      "node_type_id": "i3.xlarge",
+      "spark_conf": {
+        "spark.databricks.delta.preview.enabled": "true"
+      }
+    }
+  ],
+  "continuous": false,
+  "development": true,
+  "edition": "ADVANCED",
+  "photon": false,
+  "storage": "/tmp/dlt/bls_data_ingestion"
+}

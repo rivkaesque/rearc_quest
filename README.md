@@ -1,5 +1,44 @@
 # Rearc Data Quest
 
+## Deployment Options
+
+This repository provides **two implementation approaches** for the BLS data ingestion pipeline:
+
+### 1. AWS Lambda + S3 (Original Implementation)
+- **Location**: `src/lambda_function.py` and `template.yml`
+- **Storage**: Raw files in Amazon S3
+- **Deployment**: AWS SAM/CloudFormation
+- **Best for**: Simple file synchronization, external file access
+- **Setup Guide**: Deploy using `sam deploy` with the template.yml
+
+### 2. Databricks Delta Live Tables (Alternative Implementation)
+- **Location**: `databricks/` directory
+- **Storage**: Structured Delta tables in Unity Catalog
+- **Deployment**: Databricks DLT Pipeline
+- **Best for**: Analytics, dashboards, structured queries, data quality monitoring
+- **Setup Guide**: See [databricks/README.md](databricks/README.md)
+
+### Architecture Comparison
+
+| Aspect | AWS Lambda/S3 | Databricks DLT |
+|--------|---------------|----------------|
+| **Data Format** | Raw TSV/CSV files | Delta tables |
+| **Access Method** | S3 file access, Athena queries | SQL, Python, Dashboards |
+| **Data Quality** | Manual validation | Built-in expectations |
+| **Monitoring** | CloudWatch Logs | DLT Pipeline UI + Lineage |
+| **Scheduling** | CloudWatch Events | DLT Scheduler or Jobs |
+| **Cost Model** | Pay per execution + storage | Cluster compute + storage |
+
+Both implementations:
+- Download data from https://download.bls.gov/pub/time.series/pr/
+- Handle incremental updates based on file modification dates
+- Support automated scheduling
+- Follow BLS data access policies (User-Agent headers)
+
+Choose the implementation that best fits your infrastructure and use case. For detailed deployment instructions, see the respective documentation in each directory.
+
+---
+
 ### Q. What is this quest?
 It is a fun way to assess your data skills. It is also a good representative sample of the work we do at Rearc.
 
